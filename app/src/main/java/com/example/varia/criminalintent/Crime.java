@@ -1,5 +1,6 @@
 package com.example.varia.criminalintent;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,6 +9,7 @@ public class Crime {
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
+    private boolean mRequiresPolice;
 
     public Crime() {
         mId = UUID.randomUUID();
@@ -40,5 +42,13 @@ public class Crime {
 
     public void setSolved(boolean solved) {
         mSolved = solved;
+    }
+
+    public void setPolice(boolean requiresPolice) {
+        mRequiresPolice = requiresPolice;
+    }
+
+    public boolean policeNeeded() {
+        return mRequiresPolice;
     }
 }
