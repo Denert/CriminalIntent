@@ -1,5 +1,7 @@
 package com.example.varia.criminalintent;
 
+import android.content.Context;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -28,8 +30,8 @@ public class Crime {
         mTitle = title;
     }
 
-    public Date getDate() {
-        return mDate;
+    public String getDate(Context context) {
+        return android.text.format.DateFormat.getMediumDateFormat(context).format(mDate);
     }
 
     public void setDate(Date date) {

@@ -15,7 +15,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.util.UUID;
+
 public class CrimeFragment extends Fragment {
+
+    private static String EXTRA_CRIME_ID = "com.example.varia.criminalintent.crime_id";
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -25,7 +29,8 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCrime = new Crime();
+        UUID crimeId = (UUID) getArguments().getSerializable(EXTRA_CRIME_ID);
+        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
     }
 
     @Nullable
@@ -53,7 +58,7 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        mDateButton.setText(DateFormat.getMediumDateFormat(getActivity()).format(mCrime.getDate()));
+        mDateButton.setText(mCrime.getDate(getActivity()));
         mDateButton.setEnabled(false);
 
         mSolvedCHeckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -63,6 +68,19 @@ public class CrimeFragment extends Fragment {
             }
         });
 
+        mTitleField.setText(mCrime.getTitle());
+        mDateButton.setText(mCrime.getDate(getActivity()));
+        mSolvedCHeckBox.setChecked(mCrime.isSolved());
+
         return view;
+    }
+
+    public static CrimeFragment newInstance(UUID crimeId) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(EXTRA_CRIME_ID, crimeId);
+
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 }

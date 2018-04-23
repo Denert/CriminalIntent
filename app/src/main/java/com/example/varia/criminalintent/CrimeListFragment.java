@@ -1,5 +1,6 @@
 package com.example.varia.criminalintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,9 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public class CrimeListFragment extends Fragment {
+
+    private int temp = 0;
+
+    private static String EXTRA_CRIME_ID = "com.example.varia.criminalintent.crime_id";
 
     private RecyclerView mRecyclerView;
     private CrimeAdapter mAdapter;
@@ -35,11 +41,19 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUi();
+    }
+
     private void updateUi() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
-        mAdapter = new CrimeAdapter(crimes);
-        mRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new CrimeAdapter(crimes);
+            mRecyclerView.setAdapter(mAdapter);
+        } else mAdapter.notifyItemChanged(temp);
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -60,7 +74,7 @@ public class CrimeListFragment extends Fragment {
         public void bind(Crime crime) {
             mCrime = crime;
             title.setText(crime.getTitle());
-            date.setText(DateFormat.getMediumDateFormat(getActivity()).format(mCrime.getDate()));
+            date.setText(mCrime.getDate(getActivity()));
             if (!crime.policeNeeded())
                 mSolvedImage.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
         }
@@ -68,6 +82,9 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Snackbar.make(v, mCrime.getTitle() + " clicked!", Snackbar.LENGTH_SHORT).show();
+            temp = getAdapterPosition();
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+            startActivity(intent);
         }
     }
 
