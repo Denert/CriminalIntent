@@ -56,31 +56,32 @@ public class CrimePagerActivity extends AppCompatActivity {
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentPage--;
-                mViewPager.setCurrentItem(currentPage);
-                if (currentPage == 0) {
-                    previous.setEnabled(false);
-                    next.setEnabled(true);
-                }
-                else {
-                    previous.setEnabled(true);
-                    next.setEnabled(true);
-                }
+                mViewPager.setCurrentItem(0);
             }
         });
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentPage++;
-                mViewPager.setCurrentItem(currentPage);
-                if (currentPage == mCrimes.size() - 1) {
-                    previous.setEnabled(true);
-                    next.setEnabled(false);
-                } else {
-                    next.setEnabled(true);
-                    previous.setEnabled(true);
-                }
+                mViewPager.setCurrentItem(mCrimes.size() - 1);
+            }
+        });
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                currentPage = position;
+                setButtonEnabled();
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
@@ -94,6 +95,19 @@ public class CrimePagerActivity extends AppCompatActivity {
                     next.setEnabled(false);
                 break;
             }
+        }
+    }
+
+    private void setButtonEnabled() {
+        if (currentPage == 0) {
+            previous.setEnabled(false);
+            next.setEnabled(true);
+        } else if (currentPage == mCrimes.size() - 1) {
+            previous.setEnabled(true);
+            next.setEnabled(false);
+        } else {
+            next.setEnabled(true);
+            previous.setEnabled(true);
         }
     }
 

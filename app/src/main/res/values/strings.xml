@@ -5,6 +5,6 @@
     <string name="crime_details_label">Details</string>
     <string name="crime_solved_label">Solved</string>
     <string name="need_police">Need Police!</string>
-    <string name="previous">Previous</string>
-    <string name="next">Next</string>
+    <string name="previous">First</string>
+    <string name="next">Last</string>
 </resources>
