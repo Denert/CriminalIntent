@@ -30,8 +30,9 @@ public class Crime {
         mTitle = title;
     }
 
-    public String getDate(Context context) {
-        return android.text.format.DateFormat.getMediumDateFormat(context).format(mDate);
+    public Date getDate() {
+        //return android.text.format.DateFormat.getMediumDateFormat(context).format(mDate);
+        return mDate;
     }
 
     public void setDate(Date date) {

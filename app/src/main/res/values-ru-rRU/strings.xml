@@ -7,4 +7,5 @@
     <string name="need_police">Вызвать полицию!</string>
     <string name="previous">Первый</string>
     <string name="next">Последний</string>
+    <string name="date_picker_title">Время преступления:</string>
 </resources>

@@ -7,4 +7,6 @@
     <string name="need_police">Need Police!</string>
     <string name="previous">First</string>
     <string name="next">Last</string>
+    <string name="date_picker_title">Date of crime:</string>
+    <string name="time_picker_title">Time of crime:</string>
 </resources>
